@@ -17,7 +17,7 @@ export default function General({
   date_aujourdhui = new Date(),
 }) {
   return (
-    <div>
+    <div className="total-page">
       <Container fluid className="py-4">
         <HeaderBanner
             total={total}

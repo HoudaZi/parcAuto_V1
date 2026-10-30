@@ -3,7 +3,8 @@ import axios from "axios";
 import HeaderJawaz from "./HeaderJawaz";
 import JawazStatsAndToolbar from "./JawazStatsAndToolbar";
 import JawazTable from "./JawazTable";
-import JawazFooter from "./JawazFooter";
+import JawazFooter from "./JawazFooter"
+import "./EspaceJawaz.css";
 
 export default function EspaceJawaz() {
   const [transactions, setTransactions] = useState([]);
@@ -44,10 +45,13 @@ export default function EspaceJawaz() {
   const handleResetSearch = () => {
     setSearchTerm("");
     setCurrentPage(1);
-  };
+  }
 
-  return (
-    <div className="container-fluid px-4 py-3" style={{ backgroundColor: "#f8fcf9", minHeight: "100vh" }}>
+  const totalResults = filteredTransactions.length;
+
+ return (
+  <div className="jawaz-page">
+    <div className="jawaz-page-inner">
       <HeaderJawaz transactions={filteredTransactions} />
 
       <JawazStatsAndToolbar
@@ -65,15 +69,17 @@ export default function EspaceJawaz() {
         onDataImported={fetchJawazData}
       />
 
-      <JawazTable
-        transactions={currentTransactions}
-        loading={loading}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={(page) => setCurrentPage(page)}
-      />
+    <JawazTable
+      transactions={currentTransactions}
+      totalResults={totalResults}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={setCurrentPage}
+      loading={loading}
+    />
 
       <JawazFooter />
     </div>
-  );
+  </div>
+);
 }

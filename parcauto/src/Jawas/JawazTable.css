@@ -1,32 +1,75 @@
-/* Entête du tableau */
-.jawaz-data-table th {
-  font-size: 0.88rem;
+
+.jawaz-results-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 13px;
+  border-radius: 10px;
+  background: #e6f4ea;
+  color: #047857;
+  font-size: 13px;
   font-weight: 600;
-  background-color: #f8fafc !important;
+  white-space: nowrap;
+}
+
+.jawaz-pagination {
+  gap: 6px !important;
+}
+
+.jawaz-page-btn,
+.jawaz-page-number {
+  min-width: 38px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #e2e8e5 !important;
+  border-radius: 9px !important;
+  background: #fff !important;
   color: #475569 !important;
-  border-bottom: 2px solid #e2e8f0 !important;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
-.text-green-header {
-  color: #059669 !important;
+.jawaz-page-number.active,
+.jawaz-page-number.active:disabled {
+  background: #059669 !important;
+  color: #fff !important;
+  border-color: #059669 !important;
+  opacity: 1;
+  box-shadow: 0 3px 8px rgba(5, 150, 105, 0.18);
 }
 
-.jawaz-data-table td {
-  font-size: 0.9rem;
-  color: #1e293b;
-  border-bottom: 1px solid #f1f5f9;
+.jawaz-page-btn:hover:not(:disabled),
+.jawaz-page-number:hover:not(:disabled) {
+  background: #e6f4ea !important;
+  color: #047857 !important;
+  border-color: #a7dfc5 !important;
 }
 
-.jawaz-data-table tbody tr:hover {
-  background-color: #f0fdf4;
+.jawaz-page-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
-/* Pagination : Remplacement de l'orange par le vert #059669 */
-.bg-emerald {
-  background-color: #059669 !important;
-  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.3);
-}
+@media (max-width: 576px) {
+  .jawaz-results-badge {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
 
-.text-emerald {
-  color: #059669 !important;
+  .jawaz-pagination {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .jawaz-page-btn {
+    padding-inline: 8px !important;
+  }
+
+  .jawaz-page-number {
+    min-width: 32px;
+    padding-inline: 8px !important;
+  }
 }

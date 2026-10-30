@@ -1,0 +1,258 @@
+
+/* Styles réservés à la page Jawaz */
+.jawaz-page {
+  --jawaz-green: #059669;
+  --jawaz-dark-green: #006b46;
+  --jawaz-text: #183047;
+  --jawaz-muted: #718399;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  padding: 24px;
+  color: var(--jawaz-text);
+  background: #f6fcf8;
+  box-sizing: border-box;
+}
+
+.jawaz-page *,
+.jawaz-page *::before,
+.jawaz-page *::after {
+  box-sizing: border-box;
+}
+
+.jawaz-page .jawaz-page-inner {
+  width: 100%;
+  max-width: 1600px;
+  min-width: 0;
+  margin-inline: auto;
+}
+
+/* Header */
+.jawaz-page .jawaz-banner-wrapper {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 24px !important;
+}
+
+.jawaz-page .jawaz-header-card {
+  width: 100%;
+  min-width: 0;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.jawaz-page .jawaz-header-overlay {
+  padding: 28px !important;
+}
+
+.jawaz-page .jawaz-header-info {
+  min-width: 0;
+}
+
+.jawaz-page .jawaz-title {
+  font-size: clamp(25px, 2.5vw, 42px);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.jawaz-page .jawaz-subtitle {
+  font-size: clamp(13px, 1.2vw, 18px);
+  line-height: 1.6;
+}
+
+/* Statistics */
+.jawaz-page .jawaz-stats-toolbar-container {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 24px !important;
+}
+
+.jawaz-page .jawaz-stats-toolbar-container > .row {
+  --bs-gutter-x: 20px;
+  --bs-gutter-y: 20px;
+}
+
+.jawaz-page .jawaz-kpi-card {
+  min-width: 0;
+  min-height: 175px;
+  border-radius: 18px !important;
+  background: #fff;
+}
+
+.jawaz-page .kpi-title {
+  font-size: clamp(13px, 1vw, 17px);
+  line-height: 1.5;
+}
+
+.jawaz-page .kpi-value {
+  font-size: clamp(25px, 2.2vw, 40px);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+/* Toolbar */
+.jawaz-page .jawaz-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px !important;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 24px;
+  padding: 18px !important;
+  border-radius: 18px !important;
+}
+
+.jawaz-page .jawaz-toolbar > button,
+.jawaz-page .jawaz-toolbar > label {
+  flex: 0 0 auto;
+  min-height: 46px;
+  max-width: 100%;
+  border-radius: 12px;
+  white-space: normal;
+}
+
+.jawaz-page .jawaz-toolbar > .flex-grow-1 {
+  flex: 1 1 220px;
+  min-width: 180px;
+}
+
+.jawaz-page .jawaz-toolbar .input-group {
+  width: 100%;
+  min-width: 0;
+}
+
+.jawaz-page .jawaz-toolbar .form-control {
+  min-width: 0;
+}
+
+.jawaz-page .toolbar-divider {
+  width: 1px;
+  height: 38px;
+  flex: 0 0 1px;
+  background: #dce5ec;
+}
+
+/* Table */
+.jawaz-page > .jawaz-page-inner > .card {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 24px !important;
+  border: 1px solid #e5eee9;
+  border-radius: 18px !important;
+}
+
+.jawaz-page .table-responsive {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.jawaz-page .jawaz-data-table {
+  width: 100%;
+  min-width: 600px;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.jawaz-page .jawaz-data-table thead th {
+  padding: 18px 20px !important;
+  background: #f6f9fc;
+  color: #40566d;
+  font-size: 14px;
+  font-weight: 650;
+  white-space: nowrap;
+  border-bottom: 1px solid #e1e9ef;
+}
+
+.jawaz-page .jawaz-data-table tbody td {
+  padding: 18px 20px !important;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+/* Footer */
+.jawaz-page .container {
+  max-width: 100%;
+  padding-inline: 0;
+}
+
+.jawaz-page .jawaz-data-table + div {
+  gap: 12px;
+}
+
+.jawaz-page .pagination,
+.jawaz-page .jawaz-data-table ~ div {
+  flex-wrap: wrap;
+}
+
+/* Tablette */
+@media (max-width: 991px) {
+  .jawaz-page {
+    padding: 18px;
+  }
+
+  .jawaz-page .jawaz-header-overlay {
+    padding: 22px !important;
+  }
+
+  .jawaz-page .jawaz-toolbar {
+    align-items: stretch;
+  }
+
+  .jawaz-page .jawaz-toolbar > .flex-grow-1 {
+    flex-basis: 100%;
+    order: 3;
+  }
+
+  .jawaz-page .toolbar-divider {
+    display: none;
+  }
+}
+
+/* Téléphone */
+@media (max-width: 575px) {
+  .jawaz-page {
+    padding: 12px;
+  }
+
+  .jawaz-page .jawaz-header-overlay {
+    padding: 16px !important;
+  }
+
+  .jawaz-page .jawaz-icon-wrapper {
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+  }
+
+  .jawaz-page .jawaz-logo-img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .jawaz-page .jawaz-toolbar {
+    padding: 12px !important;
+  }
+
+  .jawaz-page .jawaz-toolbar > button,
+  .jawaz-page .jawaz-toolbar > label {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .jawaz-page .jawaz-toolbar > .flex-grow-1 {
+    min-width: 0;
+    flex-basis: 100%;
+    order: 0;
+  }
+
+  .jawaz-page .jawaz-kpi-card {
+    min-height: 150px;
+  }
+
+  .jawaz-page .jawaz-data-table thead th,
+  .jawaz-page .jawaz-data-table tbody td {
+    padding: 14px 12px !important;
+  }
+}

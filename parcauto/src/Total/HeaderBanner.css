@@ -20,8 +20,8 @@
 
 
 .banner-icon {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,17 +35,26 @@
 }
 
 .banner-text h1 {
-  margin: 0 0 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin: 0 0 12px;
   color: #064e3b;
-  font-size: 34px;
+  font-size: 28px;
   font-weight: bold;
+  line-height: 1.15;
+}
+
+.banner-text h1 span {
+  color: #07845f;
 }
 
 .banner-text p {
-  margin: 0;
-  color: #52677c;
-  font-size: 14px;
-  line-height: 1.5;
+  max-width: 650px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.7;
 }
 
 .total-logo {
@@ -218,5 +227,97 @@
 
   .kpi-card .card-body {
     padding: 14px;
+  }
+}
+
+/* ===== Correction du chevauchement des cartes ===== */
+
+.total-page .kpi-container .row {
+  align-items: stretch;
+}
+
+.total-page .kpi-card {
+  min-width: 0;
+  height: 100%;
+}
+
+.total-page .kpi-card .card-body {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px;
+}
+
+.total-page .kpi-card .kpi-icon {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+}
+
+.total-page .kpi-card .kpi-info {
+  min-width: 0;
+  width: 100%;
+}
+
+.total-page .kpi-card .kpi-info h6 {
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 700;
+  white-space: normal;
+  overflow-wrap: normal;
+  margin-bottom: 8px;
+}
+
+.total-page .kpi-card .kpi-info h3 {
+  font-size: clamp(19px, 1.5vw, 26px);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  margin-bottom: 7px;
+}
+
+.total-page .kpi-card .kpi-info p {
+  font-size: 11px;
+  line-height: 1.5;
+  align-items: flex-start;
+}
+
+.total-page .kpi-card .kpi-side-icon {
+  justify-self: center;
+}
+
+/* Écrans moyens */
+@media (max-width: 1200px) {
+  .total-page .kpi-card .card-body {
+    grid-template-columns: 48px minmax(0, 1fr) 18px;
+    gap: 10px;
+    padding: 16px 12px;
+  }
+
+  .total-page .kpi-card .kpi-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+  }
+
+  .total-page .kpi-card .kpi-info h6 {
+    font-size: 12px;
+  }
+
+  .total-page .kpi-card .kpi-info h3 {
+    font-size: 20px;
+  }
+}
+
+/* Téléphones */
+@media (max-width: 576px) {
+  .total-page .kpi-card .card-body {
+    grid-template-columns: 48px minmax(0, 1fr) 18px;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .total-page .kpi-card .kpi-info h3 {
+    font-size: 21px;
   }
 }

@@ -1,9 +1,10 @@
 .filtres-container-card {
   background: #FFFFFF !important;
   border-radius: 12px !important;
-  border: 1px solid #E2E8F0 !important;
+  border: 2px solid #dddddd !important;
   box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.04) !important;
   padding: 24px !important;
+  margin: 10px;
 }
 .filtres-icon-badge {
   background-color: #DCFCE7;
@@ -47,7 +48,7 @@
   background-color: #FFFFFF !important;
 }
 .btn-reset-filters {
-  background-color: #F8FAFC !important;
+  background-color: #f8fcf8 !important;
   border: 1px solid #CBD5E1 !important;
   color: #475569 !important;
   border-radius: 8px !important;

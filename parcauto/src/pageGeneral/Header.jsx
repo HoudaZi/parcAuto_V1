@@ -1,54 +1,74 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
-import img from '../assets/logo2.png'
+
+import { Outlet } from 'react-router-dom';
+import {
+  Search,
+  Bell,
+  Grid2X2,
+  ScanLine,
+} from 'lucide-react';
+import './AppLayout.css';
+
 export default function AppLayout() {
-  const location = useLocation();
-  const getNavLinkClass = (path) => {
-    const isActive = location.pathname === path;
-    return `nav-link fw-semibold px-3 py-2 rounded-3 transition-all ${
-      isActive 
-        ? 'bg-success text-white shadow-sm' 
-        : 'text-dark hover-bg-custom'
-    }`
-  }
   return (
-    <div className="min-vh-100 d-flex flex-column" style={{ backgroundColor: '#F8FAFC' }}>
-      <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 shadow-sm sticky-top">
-          <div className="container-fluid">
-            <Link className="navbar-brand fw-bold fs-4 d-flex align-items-center gap-2 text-decoration-none" to="/" style={{ color: '#026523' }}>
-              <img src={img} alt="Logo" style={{ width: '65px', height: '40px', objectFit: 'contain' }} />
-              ParcAuto
-            </Link>
-            <div className="collapse navbar-collapse show">
-              <ul className="navbar-nav ms-auto mb-2 mb-lg-0 gap-2 align-items-center">
-                <li className="nav-item">
-                  <Link className={getNavLinkClass('/')} to="/">
-                    Accueil
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className={getNavLinkClass('/assurance/accueil')} to="/assurance/accueil">
-                    Assurance
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className={getNavLinkClass('/total')} to="/total">
-                    Total
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className={getNavLinkClass('/jawaz')} to="/jawaz">
-                    Jawaz
-                  </Link>
-                </li>
-              </ul>
+    <div className="app-layout app-main">
+      <header className="top-header">
+        <div className="header-search">
+          <Search size={17} color="#8291A5" />
+
+          <input
+            type="text"
+            placeholder="Rechercher un véhicule, un badge, une transaction..."
+            aria-label="Rechercher"
+          />
+        </div>
+
+        <div className="header-actions">
+          <button
+            type="button"
+            className="header-icon-btn notification-btn"
+            aria-label="Notifications"
+          >
+            <Bell size={19} />
+            <span className="notification-dot" />
+          </button>
+
+          <button
+            type="button"
+            className="header-icon-btn"
+            aria-label="Applications"
+          >
+            <Grid2X2 size={19} />
+          </button>
+
+          <div className="header-divider" />
+
+          <div className="admin-profile">
+            <div className="admin-avatar">AD</div>
+
+            <div className="admin-info">
+              <span className="admin-name">
+                Ahmed DOUKKALI
+              </span>
+              <span className="admin-role">
+                Administrateur
+              </span>
             </div>
           </div>
-        </nav>
-        <main className="container-fluid px-4 py-4">
-          <Outlet />
-        </main>
-      </div>
+
+          <button
+            type="button"
+            className="header-icon-btn scan-btn"
+            aria-label="Scanner"
+          >
+            <ScanLine size={21} />
+          </button>
+        </div>
+      </header>
+
+      {/* Pages */}
+      <main className="main-content">
+        <Outlet />
+      </main>
     </div>
-  )
+  );
 }

@@ -6,19 +6,13 @@ import {
   CreditCard,
   ReceiptText,
   CalendarDays,
-  Users,
-  TrendingUp,
-  ChartNoAxesColumnIncreasing,
-  CircleCheck,
   Fuel,
-  Droplets,
 } from "lucide-react";
 
 export default function HeaderBanner({
   total = 0,
   montant = 0,
   volume = 0,
-  derniere_importation = "N/A",
   date_aujourdhui = new Date(),
 }) {
   const formatMontant = (value) =>
@@ -33,7 +27,7 @@ export default function HeaderBanner({
 
   const formatDate = (date) => {
     const d = new Date(date);
-    if (Number.isNaN(d.getTime())) return date; // Si c'est déjà une chaîne formatée dd/mm/yyyy
+    if (Number.isNaN(d.getTime())) return date;
 
     return d.toLocaleDateString("fr-FR", {
       day: "2-digit",
@@ -44,34 +38,24 @@ export default function HeaderBanner({
 
   const kpis = [
     {
-      title: "Total des Cartes Actives",
+      title: "Cartes Actives",
       value: total,
-      description: "Cartes TotalEnergies en service",
       Icon: CreditCard,
-      SideIcon: Users,
     },
     {
-      title: "Montant Total par Mois",
+      title: "Montant du Mois",
       value: formatMontant(montant),
-      description: "Montant total des transactions du mois",
       Icon: ReceiptText,
-      SideIcon: ChartNoAxesColumnIncreasing,
-      trend: true,
     },
     {
-      title: "Volume Total par Mois",
+      title: "Volume du Mois",
       value: formatVolume(volume),
-      description: "Volume total consommé ce mois-ci",
       Icon: Fuel,
-      SideIcon: Droplets,
     },
     {
       title: "Date du Jour",
       value: formatDate(date_aujourdhui),
-      description: "Date actuelle",
       Icon: CalendarDays,
-      SideIcon: CircleCheck,
-      success: true,
     },
   ];
 
@@ -81,7 +65,7 @@ export default function HeaderBanner({
         <Row className="align-items-center g-0">
           <Col xs={2} md={1}>
             <div className="banner-icon">
-              <Fuel size={60} strokeWidth={2.2} />
+              <Fuel size={30} strokeWidth={2.2} />
             </div>
           </Col>
 
@@ -111,39 +95,21 @@ export default function HeaderBanner({
         <Row className="g-3">
           {kpis.map((kpi) => {
             const Icon = kpi.Icon;
-            const SideIcon = kpi.SideIcon;
 
             return (
               <Col xs={12} sm={6} xl={3} key={kpi.title}>
-                <Card className="kpi-card h-100">
-                  <Card.Body>
+                <Card className="kpi-card total-kpi-card h-100 border-0 shadow-sm py-2">
+                  <Card.Body className="d-flex align-items-center justify-content-between">
                     <div className="kpi-icon">
-                      <Icon size={27} strokeWidth={2.2} />
+                      <Icon size={29} strokeWidth={2.1} />
                     </div>
-
-                    <div className="kpi-info">
-                      <h6>{kpi.title}</h6>
-                      <h3>{kpi.value}</h3>
-
-                      <p className={kpi.trend ? "kpi-trend" : ""}>
-                        {kpi.trend && (
-                          <TrendingUp size={14} strokeWidth={2.5} />
-                        )}
-
-                        {kpi.success && (
-                          <CircleCheck size={13} fill="currentColor" />
-                        )}
-
-                        <span>{kpi.description}</span>
-                      </p>
-                    </div>
-
-                    <div
-                      className={`kpi-side-icon ${
-                        kpi.success ? "kpi-success" : ""
-                      }`}
-                    >
-                      <SideIcon size={21} strokeWidth={2.7} />
+                    <div>
+                      <span className="text-muted d-block mb-1" style={{ fontSize: '1rem' }}>
+                        {kpi.title}
+                      </span>
+                      <h3 className="fw-bold mb-0 text-dark" style={{ fontSize: '1rem' }}>
+                        {kpi.value}
+                      </h3>
                     </div>
                   </Card.Body>
                 </Card>

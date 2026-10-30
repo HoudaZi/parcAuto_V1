@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Sidebar from './pageGeneral/Sidebar';
 
 import AppLayout from './pageGeneral/Header'
 import Footer from './pageGeneral/footer'
@@ -37,47 +38,47 @@ function App() {
   const [showError, setShowError] = useState(false)
   const [errorMessage, setErrorMessage] = useState({ title: '', sub: '' })
 
-  const fetchVehicules = async () => {
-    try {
-      const response = await axios.get('http://127.0.0.1:8000/api/vehicules/');
-      setVehicules(response.data)
-    } catch (error) {
-      console.error("Détail de l'erreur Django:", error.response?.data);
-    }
-  }
-  useEffect(() => {
-    fetchVehicules()
-  }, [])
 
-  const handleAddVehicle = async (e, navigate) => {
-    e.preventDefault()
-    const dataToSend = { ...formData }
-    try {
-      await axios.post('http://127.0.0.1:8000/api/vehicules/', dataToSend)
-      setToastMessage({ title: 'Succès !', sub: 'Véhicule ajouté avec succès' })
-      setShowToast(true)
-      setTimeout(() => setShowToast(false), 4000);
-      fetchVehicules()
-      setFormData({
-        type_vehicule: '',
-        immatriculation: '',
-        ville: '',
-        chauffeur: '',
-        assurance_fin: '',
-        visite_technique: '',
-        vignettes: '',
-        mise_en_circulation: '',
-        contact: '',
-        permis_circulation: ''
-      })
-      navigate('/assurance/accueil')
-    } catch (error) {
-      console.error("Erreur:", error.response?.data)
-      setErrorMessage({ title: 'Erreur !', sub: "Erreur lors de l'ajout. Vérifie les champs !" });
-      setShowError(true)
-      setTimeout(() => setShowError(false), 4000);
+
+    const fetchVehicules = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/vehicules/');
+        setVehicules(response.data); // Hada kay-dir re-render l ga3 les composants li m-passi lihom 'vehicules'
+      } catch (error) {
+        console.error("Détail de l'erreur Django:", error.response?.data);
+      }
     }
-  }
+
+
+    useEffect(() => {
+      if (fetchVehicules) {
+        fetchVehicules();
+      }
+    }, []);
+
+    const handleAddVehicle = async (e, navigate) => {
+      e.preventDefault();
+      try {
+        await axios.post('http://127.0.0.1:8000/api/vehicules/', formData);
+        await fetchVehicules(); 
+        setFormData({
+            type_vehicule: '',
+            immatriculation: '',
+            ville: '',
+            chauffeur: '',
+            assurance_fin: '',
+            visite_technique: '',
+            vignettes: '',
+            mise_en_circulation: '',
+            contact: '',
+            permis_circulation: ''
+          })
+        // <--- Tsenna hta t-fetchia data jdida 3ad dir navigate
+        navigate('/assurance/accueil');
+      } catch (error) {
+        console.error("Erreur:", error);
+      }
+    }
 
   const [searchTerm, setSearchTerm] = useState('');
   const [type, setType] = useState('');
@@ -137,13 +138,13 @@ function App() {
     setSearchTotal('');
   };
 
-  // 💰 Montant total (شامل كاع العمليات باش يبانوا الأرقام فـ Cards)
   const totalMontant = transactionsTotal.reduce(
     (acc, t) => acc + (Number(t.montant) || 0),
     0
   );
 
-  // ⛽ Volume total (شامل كاع العمليات)
+  const total = transactionsTotal.length
+
   const totalVolume = transactionsTotal.reduce(
     (acc, t) =>
       acc +
@@ -151,7 +152,6 @@ function App() {
     0
   );
 
-  // 📅 Date actuelle au format JJ/MM/AAAA
   const dateAujourdhui = new Date().toLocaleDateString("fr-FR", {
     day: "2-digit",
     month: "2-digit",
@@ -159,14 +159,37 @@ function App() {
   });
 
   const derniereImport =
-    transactionsTotal.length > 0 ? "Aujourd'hui" : "Aucune";
+    transactionsTotal.length > 0 ? "Aujourd'hui" : "Aucune"
+
+  const [jawaz , setJawaz] = useState(0)
+
+  const fetchJawaz = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/jawaz/'); 
+      setJawaz(response.data.length ?? response.data); 
+    } catch (error) {
+      console.error("Erreur chargement Jawaz:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchVehicules();
+    fetchTotalTransactions();
+    fetchJawaz(); // <--- Zid hadi hna bash t-fetchia f l'ouverture
+  }, []);
 
   return (
     <div style={{backgroundColor: '#f8fcf9'}}>
         <BrowserRouter>
           <Routes>
-            <Route element={<AppLayout />}>
-              <Route path="/" element={<PageGeneral vehicules={vehicules} />} />
+            <Route    
+             element={
+              <>
+                <Sidebar />
+                <AppLayout />
+              </>
+              }>
+              <Route path="/" element={<PageGeneral vehicules={vehicules} total={transactionsTotal.length} jawaz={jawaz}/>} />
               <Route path="/assurance" element={<PageGeneral />} />
               <Route 
                 path="/total" 

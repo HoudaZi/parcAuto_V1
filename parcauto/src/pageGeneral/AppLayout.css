@@ -1,0 +1,177 @@
+.app-layout.app-main {
+  width: calc(100% - 260px); /* متوافق مع العرض الجديد ديال الـ Sidebar (260px) */
+  max-width: calc(100% - 260px);
+  min-width: 0;
+  min-height: 100vh;
+  margin-left: 260px;
+  background-color: #f5f8fc;
+  box-sizing: border-box;
+}
+
+/* Header */
+.app-layout .top-header {
+  width: 100%;
+  min-width: 0;
+  height: 68px; /* كبرناه شوية باش ياخد الراحة */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+  background: #fff;
+  border-bottom: 1px solid #e8edf3;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* Search */
+.app-layout .header-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(440px, 48%);
+  min-width: 0;
+  height: 40px;
+  padding: 0 14px;
+  background: #f5fcf6;
+  border: 1px solid #e5edf5;
+  border-radius: 10px;
+}
+
+.app-layout .header-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 13px; /* كبرنا الخط شوية باش يكون واضح */
+  font-family: Arial, sans-serif;
+}
+
+/* Actions */
+.app-layout .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.app-layout .header-icon-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  color: #64748b;
+  background: transparent;
+  border: 0;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.app-layout .header-icon-btn:hover {
+  background: #edf7f3;
+  color: #08785c;
+}
+
+.app-layout .notification-dot {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border: 1px solid #fff;
+  border-radius: 50%;
+}
+
+.app-layout .header-divider {
+  height: 32px;
+  border-left: 1px solid #e5edf5;
+}
+
+.app-layout .admin-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-layout .admin-avatar {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: white;
+  background: #08785c;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+}
+
+.app-layout .admin-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.app-layout .admin-name {
+  color: #1e293b;
+  font-size: 13px; /* كبرنا الاسم باش يولي مقاد مع الـ Sidebar */
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+  white-space: nowrap;
+}
+
+.app-layout .admin-role {
+  color: #8291a5;
+  font-size: 11px; /* كبرنا الـ Role شوية */
+  font-family: Arial, sans-serif;
+}
+
+/* Main Content Area */
+.app-layout .main-content {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 24px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Empêcher les enfants de dépasser la page */
+.app-layout .main-content > * {
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Tableaux responsives */
+.app-layout .main-content table {
+  max-width: 100%;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .app-layout.app-main {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .app-layout .main-content {
+    padding: 14px;
+  }
+
+  .app-layout .top-header {
+    padding: 0 14px;
+  }
+}

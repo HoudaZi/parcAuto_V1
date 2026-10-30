@@ -1,9 +1,27 @@
 /* نقصنا الـ margin-top باش يطلعوا البطاقات لفوق */
 .jawaz-stats-toolbar-container {
-  margin-top: -3.5rem !important; /* قيمة سالبة باش يطلع الكارت لفوق أكثر */
+  margin-top: -5rem !important; /* قيمة سالبة باش يطلع الكارت لفوق أكثر */
   position: relative;
   z-index: 10;
 }
+
+.jawaz-stats-toolbar-container > .row:first-child > .col-12 {
+  width: 100%;
+  max-width: 360px;
+}
+
+/* Réduire l'espace entre la carte et la barre d'outils */
+.jawaz-toolbar {
+  margin-top: 0 !important;
+  margin-bottom: 20px;
+}
+
+/* Éviter les espaces inutiles dans le conteneur */
+.jawaz-stats-toolbar-container {
+  width: 100%;
+  margin-bottom: 20px !important;
+}
+
 
 .jawaz-kpi-card {
   background-color: #ffffff;

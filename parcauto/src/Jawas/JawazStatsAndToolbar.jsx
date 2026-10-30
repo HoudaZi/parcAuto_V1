@@ -8,7 +8,7 @@ import ErrorToast from "../composents/ErrorToast";
 import "./JawazStatsAndToolbar.css";
 
 export default function JawazStatsAndToolbar({
-  stats = { totalPassages: 48, totalConsomme: 2720, soldeRestant: 5850 },
+  stats = { totalPassages: 0, totalConsomme: 0, soldeRestant: 0 },
   searchTerm = "",
   onSearchChange,
   onResetSearch,
@@ -17,28 +17,25 @@ export default function JawazStatsAndToolbar({
   const [showModal, setShowModal] = useState(false);
   const [singleImmat, setSingleImmat] = useState("");
 
-  // حالات التحكم في التنبيهات الاحترافية (Toasts)
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState({ title: "", sub: "" });
 
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ title: "", sub: "" });
 
-  // دالة إظهار نجاح العملية
   const triggerSuccess = (title, sub) => {
     setToastMessage({ title, sub });
     setShowToast(true);
     setTimeout(() => setShowToast(false), 4000);
   };
 
-  // دالة إظهار خطأ
   const triggerError = (title, sub) => {
     setErrorMessage({ title, sub });
     setShowError(true);
     setTimeout(() => setShowError(false), 4000);
   };
 
-  // دالة إضافة ماتريكول واحدة يدوياً
+  // إضافة ماتريكول واحدة يدوياً
   const handleAddSingleMatricule = async (e) => {
     e.preventDefault();
     if (!singleImmat.trim()) {
@@ -47,7 +44,7 @@ export default function JawazStatsAndToolbar({
     }
 
     try {
-      const response = await axios.post("http://localhost:8000/api/jawaz/", {
+      await axios.post("http://localhost:8000/api/jawaz/", {
         immatriculation: singleImmat.trim()
       });
 
@@ -62,7 +59,7 @@ export default function JawazStatsAndToolbar({
     }
   };
 
-  // دالة رفع وقراءة ملف Excel
+  // قراءة ورفع ملف Excel مع معالجة ذكية للأعمدة
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -74,29 +71,51 @@ export default function JawazStatsAndToolbar({
         const workbook = XLSX.read(buffer, { type: "array" });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+        
+        // تحويل محتوى الإكسيل إلى JSON
+        const rawData = XLSX.utils.sheet_to_json(worksheet);
 
-        if (!jsonData || jsonData.length === 0) {
+        if (!rawData || rawData.length === 0) {
           triggerError("Erreur !", "Le fichier Excel est vide.");
           return;
         }
 
-        fetch("http://localhost:8000/api/jawaz/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(jsonData),
-        })
-          .then(async (res) => {
-            const data = await res.json();
-            if (res.ok) {
-              triggerSuccess("Succès !", data.message || "Importation réussie !");
-              if (onDataImported) onDataImported();
-            } else {
-              triggerError("Erreur !", data.error || "Erreur lors de l'importation.");
-            }
+        // تنظيف وتوحيد البيانات المستخرجة من الإكسيل لتلائم توقعات الـ Backend
+        const formattedData = rawData.map((row) => {
+          // البحث عن المفتاح الذي يمثل الماتريكول بغض النظر عن طريقة كتابته في الإكسيل
+          const immatValue = 
+            row.Matricule || 
+            row.matricule || 
+            row.Immatriculation || 
+            row.immatriculation || 
+            row.IMMATRICULATION || 
+            row.Plaque || 
+            Object.values(row)[0]; // كحل أخير، أخذ قيمة أول عمود
+
+          return {
+            immatriculation: immatValue ? String(immatValue).trim() : ""
+          };
+        }).filter(item => item.immatriculation !== "");
+
+        if (formattedData.length === 0) {
+          triggerError("Erreur !", "Aucune immatriculation valide trouvée dans le fichier.");
+          return;
+        }
+
+        // إرسال البيانات إلى الـ API
+        axios.post("http://localhost:8000/api/jawaz/", formattedData)
+          .then((res) => {
+            triggerSuccess("Succès !", res.data.message || "Importation réussie !");
+            if (onDataImported) onDataImported();
           })
-          .catch(() => triggerError("Erreur de connexion", "Impossible de contacter le serveur."));
-      } catch {
+          .catch((err) => {
+            console.error(err);
+            const errorMsg = err.response?.data?.error || "Erreur lors de l'importation.";
+            triggerError("Erreur !", errorMsg);
+          });
+
+      } catch (err) {
+        console.error(err);
         triggerError("Erreur !", "Erreur lors de la lecture du fichier Excel.");
       }
     };
@@ -106,74 +125,7 @@ export default function JawazStatsAndToolbar({
 
   return (
     <div className="jawaz-stats-toolbar-container mb-4">
-      {/* 📊 الكروت الثلاثة للإحصائيات */}
-      <Row className="g-3 mb-4">
-        <Col xs={12} md={4}>
-          <Card className="jawaz-kpi-card border-0 shadow-sm rounded-4 overflow-hidden h-100">
-            <Card.Body className="p-3 d-flex flex-column justify-content-between position-relative z-1">
-              <div className="d-flex align-items-center gap-3">
-                <div className="kpi-icon-circle bg-orange-light text-orange">
-                  <Car size={26} />
-                </div>
-                <div><span className="kpi-title text-muted fw-bold">Total Passages du Mois</span></div>
-              </div>
-              <div className="d-flex align-items-baseline justify-content-between mt-3">
-                <h2 className="kpi-value text-dark fw-bold mb-0">{stats.totalPassages}</h2>
-                <span className="kpi-badge text-orange fw-semibold d-flex align-items-center gap-1">
-                  <TrendingUp size={14} /> +12%
-                </span>
-              </div>
-            </Card.Body>
-            <div className="kpi-wave wave-orange"></div>
-          </Card>
-        </Col>
-
-        <Col xs={12} md={4}>
-          <Card className="jawaz-kpi-card border-0 shadow-sm rounded-4 overflow-hidden h-100">
-            <Card.Body className="p-3 d-flex flex-column justify-content-between position-relative z-1">
-              <div className="d-flex align-items-center gap-3">
-                <div className="kpi-icon-circle bg-orange-light text-orange">
-                  <Coins size={26} />
-                </div>
-                <div><span className="kpi-title text-muted fw-bold">Montant Total Consommé (MAD)</span></div>
-              </div>
-              <div className="d-flex align-items-baseline justify-content-between mt-3">
-                <h2 className="kpi-value text-dark fw-bold mb-0">
-                  {Number(stats.totalConsomme).toLocaleString("fr-FR")} <span className="fs-5">MAD</span>
-                </h2>
-                <span className="kpi-badge text-orange fw-semibold d-flex align-items-center gap-1">
-                  <TrendingUp size={14} /> +8%
-                </span>
-              </div>
-            </Card.Body>
-            <div className="kpi-wave wave-orange"></div>
-          </Card>
-        </Col>
-
-        <Col xs={12} md={4}>
-          <Card className="jawaz-kpi-card border-0 shadow-sm rounded-4 overflow-hidden h-100">
-            <Card.Body className="p-3 d-flex flex-column justify-content-between position-relative z-1">
-              <div className="d-flex align-items-center gap-3">
-                <div className="kpi-icon-circle bg-green-light text-green">
-                  <Wallet size={26} />
-                </div>
-                <div><span className="kpi-title text-muted fw-bold">Solde Global Restant (MAD)</span></div>
-              </div>
-              <div className="d-flex align-items-baseline justify-content-between mt-3">
-                <h2 className="kpi-value text-dark fw-bold mb-0">
-                  {Number(stats.soldeRestant).toLocaleString("fr-FR")} <span className="fs-5">MAD</span>
-                </h2>
-              </div>
-            </Card.Body>
-            <div className="kpi-wave wave-green"></div>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* 🛠️ شريط الأدوات */}
       <div className="jawaz-toolbar bg-white p-3 rounded-4 shadow-sm border d-flex align-items-center flex-wrap gap-3">
-        
-        {/* زر إضافة ماتريكول واحدة */}
         <Button 
           onClick={() => setShowModal(true)}
           className="btn-jawaz-import d-flex align-items-center gap-2 px-3 py-2 fw-semibold text-white shadow-sm border-0"
@@ -183,7 +135,6 @@ export default function JawazStatsAndToolbar({
           <span>Ajouter Immatriculation</span>
         </Button>
 
-        {/* زر استيراد ملف Excel */}
         <label className="btn-jawaz-import d-flex align-items-center gap-2 px-3 py-2 fw-semibold text-white shadow-sm mb-0" style={{ cursor: "pointer", backgroundColor: "#059669" }}>
           <Upload size={18} />
           <span>Importer (Excel)</span>
@@ -192,7 +143,6 @@ export default function JawazStatsAndToolbar({
 
         <div className="toolbar-divider d-none d-md-block"></div>
 
-        {/* حقل البحث */}
         <div className="flex-grow-1 position-relative">
           <div className="input-group search-input-group">
             <span className="input-group-text bg-white border-end-0 ps-3">
@@ -208,14 +158,12 @@ export default function JawazStatsAndToolbar({
           </div>
         </div>
 
-        {/* زر إعادة التعيين */}
         <Button variant="light" onClick={onResetSearch} className="btn-jawaz-reset d-flex align-items-center gap-2 px-3 py-2 fw-semibold text-secondary border">
           <RotateCcw size={16} />
           <span>Réinitialiser</span>
         </Button>
       </div>
 
-      {/* 🪟 Modal النافذة المنبثقة لإدخال الماتريكول */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton className="border-0 pb-0">
           <Modal.Title className="fw-bold text-dark">Ajouter une Immatriculation</Modal.Title>
@@ -246,7 +194,6 @@ export default function JawazStatsAndToolbar({
         </Modal.Body>
       </Modal>
 
-      {/* 🔔 التنبيهات الاحترافية (Toasts) */}
       <SuccessToast 
         show={showToast} 
         onClose={() => setShowToast(false)} 
@@ -259,7 +206,6 @@ export default function JawazStatsAndToolbar({
         onClose={() => setShowError(false)} 
         message={errorMessage.sub} 
       />
-
     </div>
   );
 }

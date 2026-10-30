@@ -496,7 +496,7 @@ export default function TransactionToolbar({ searchTotal, setSearchTotal, handle
         }
     }
     return (
-        <div className="card border-0 p-3 mb-4 shadow-sm">
+        <div className="card total-toolbar border-0 p-3 mb-4 shadow-sm">
             <input
                 type="file"
                 ref={fileInputRef}
@@ -528,10 +528,6 @@ export default function TransactionToolbar({ searchTotal, setSearchTotal, handle
                                     {isImporting ? "Importation en cours..." : "Importer un Rapport Excel"}
                                 </span>
                             </button>
-                            <div className="d-none d-md-flex align-items-center text-muted" style={{ fontSize: "12px" }}>
-                                <FileSpreadsheet size={17} className="me-1 text-success" />
-                                Excel / CSV
-                            </div>
                         </div>
                     </Col>
                     <Col xs={12} lg={6}>
@@ -555,7 +551,6 @@ export default function TransactionToolbar({ searchTotal, setSearchTotal, handle
                                 title="Réinitialiser la recherche"
                             >
                                 <RotateCcw size={17} className="text-success" />
-                                <span className="d-none d-md-inline">Réinitialiser</span>
                             </button>
                         </div>
                     </Col>

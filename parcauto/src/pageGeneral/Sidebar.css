@@ -1,0 +1,215 @@
+.app-sidebar {
+  width: 260px;
+  min-width: 260px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 14px 20px;
+  color: #fff;
+  background: linear-gradient(180deg, #004d37 0%, #003d24 100%);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  margin: 0 4px 25px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar-brand img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.sidebar-brand span {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.sidebar-brand strong {
+  font-size: 16px; /* كبّرنا العنوان الرئيسي */
+  font-weight: 700;
+}
+
+.sidebar-brand small {
+  margin-top: 2px;
+  font-size: 13px; /* كبّرنا النص الفرعي */
+  color: #d1e6df;
+}
+
+/* NAVIGATION */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px; /* مسافة مريحة بين العناصر */
+}
+
+.sidebar-item {
+  min-height: 42px; /* كبّرنا ارتفاع السطر */
+  display: flex;
+  align-items: center;
+  border-radius: 9px;
+  color: #e1eee9;
+  transition: all 0.2s ease;
+}
+
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.sidebar-item-active {
+  background: linear-gradient(90deg, #078e6c, #079b75);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-link {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px; /* زدنا الـ padding باش ترتاح الكليكة */
+  color: inherit;
+  text-decoration: none;
+  font-size: 14px; /* كبّرنا الخط من 11px لـ 14px */
+  font-weight: 600;
+  font-family: Arial, sans-serif;
+}
+
+.sidebar-link span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-toggle {
+  width: 34px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 4px;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.sidebar-toggle svg {
+  transition: transform 0.2s ease;
+}
+
+.sidebar-toggle .chevron-open {
+  transform: rotate(180deg);
+}
+
+/* SUBMENU */
+.sidebar-submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 0 6px 36px;
+  padding-left: 12px;
+  border-left: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.sidebar-submenu-link {
+  padding: 8px 10px;
+  color: #c4ded5;
+  font-size: 13px; /* كبّرنا الخط ديال القائمة الفرعية */
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-submenu-link:hover,
+.sidebar-submenu-link.submenu-active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* CARTE EN BAS */
+.sidebar-bottom-card {
+  min-height: 120px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: auto;
+  padding: 16px 14px;
+  background: linear-gradient(150deg, #005747, #00634d);
+  border-radius: 14px;
+}
+
+.sidebar-bottom-text {
+  position: relative;
+  z-index: 2;
+}
+
+.sidebar-bottom-text p {
+  margin: 8px 0 0;
+  color: #fff;
+  font-size: 12px; /* كبّرنا نص البطاقة */
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.road {
+  position: absolute;
+  z-index: 1;
+  bottom: -37px;
+  right: -20px;
+  width: 190px;
+  height: 76px;
+  border-radius: 50% 0 0 0;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+.road-one {
+  background: #087a60;
+}
+
+.road-two {
+  right: -35px;
+  bottom: -45px;
+  background: #07936c;
+}
+
+.road-three {
+  right: 28px;
+  bottom: -50px;
+  width: 85px;
+  height: 90px;
+  border-left: 3px dashed #fff;
+  border-radius: 50%;
+  background: transparent;
+  transform: rotate(28deg);
+}
+
+@media (max-width: 768px) {
+  .app-sidebar {
+    width: 240px;
+    min-width: 240px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .app-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+}

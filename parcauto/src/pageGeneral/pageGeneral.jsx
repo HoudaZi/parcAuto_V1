@@ -1,325 +1,327 @@
+
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Carousel } from 'react-bootstrap';
-import { Car, ShieldCheck, Fuel, CreditCard } from 'lucide-react';
-import 'animate.css'
+import {
+  CarFront,
+  ShieldCheck,
+  Fuel,
+  CreditCard,
+  TrendingUp,
+  ArrowRight,
+  Bell,
+  Coins,
+  MapPin,
+  FileText,
+  Droplet,
+  ChartNoAxesColumn,
+} from 'lucide-react';
+
+import 'animate.css';
 import './pageGeneral.css'
-export default function PageGeneral({ vehicules }) {
+import imgPacauto from '../assets/parcauto.jpeg'
+import imgTotal from '../assets/Total.jpg'
+import imgJawaz from '../assets/jawaz.jpg'
+
+const modules = [
+  {
+    title: 'Document Vericuls',
+    subtitle: 'Gestion de flotte',
+    description:
+      'Suivi des véhicules, visites techniques, assurances et alertes d’expiration.',
+    path: '/assurance/accueil',
+    color: '#079875',
+    light: '#E2F7F0',
+    image: imgPacauto,
+    icon: CarFront,
+    secondaryIcon: ShieldCheck,
+    tags: [
+      { label: 'Véhicules', icon: CarFront },
+      { label: 'Assurances', icon: ShieldCheck },
+    ],
+  },
+  {
+    title: 'Gestion Carburant',
+    subtitle: 'TotalEnergies',
+    description:
+      'Importation et suivi des transactions de carburant, kilomètres et tickets.',
+    path: '/total',
+    color: '#3478E5',
+    light: '#E8F0FF',
+    image: imgTotal,
+    icon: Fuel,
+    secondaryIcon: Coins,
+    tags: [
+      { label: 'Transactions', icon: FileText },
+      { label: 'Consommation', icon: Droplet },
+    ],
+  },
+  {
+    title: 'Espace Jawaz',
+    subtitle: 'Badges autoroutiers',
+    description:
+      'Gestion des passages d’autoroute Jawaz, import Excel et soldes.',
+    path: '/jawaz',
+    color: '#DF8C22',
+    light: '#FFF2DE',
+    image: imgJawaz,
+    icon: CreditCard,
+    secondaryIcon: MapPin,
+    tags: [
+      { label: 'Soldes', icon: Coins },
+      { label: 'Passages', icon: MapPin },
+    ],
+  },
+]
+
+
+
+const slides = [
+  {
+    image:
+      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1400&auto=format&fit=crop',
+    title: 'Bonjour Ahmed 👋',
+    date: 'Lundi 28 avril 2025',
+    description:
+      'Gestion centralisée du parc automobile, de la consommation de carburant et des badges Jawaz.',
+    button: 'Espace Total',
+    path: '/total',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=1400&auto=format&fit=crop',
+    title: 'Gestion intelligente du parc auto',
+    date: 'Votre flotte en un seul espace',
+    description:
+      'Suivez vos véhicules, vos assurances et vos visites techniques.',
+    button: 'Découvrir les véhicules',
+    path: '/assurance/accueil',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1527018601619-a508a2be00cd?q=80&w=1400&auto=format&fit=crop',
+    title: 'Maîtrisez vos dépenses',
+    date: 'Gestion du carburant',
+    description:
+      'Consultez vos transactions et optimisez le suivi des cartes carburant.',
+    button: 'Gestion carburant',
+    path: '/total',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1400&auto=format&fit=crop',
+    title: 'Recharge et suivi Jawaz',
+    date: 'Gestion des badges autoroutiers',
+    description:
+      'Centralisez les badges, les passages et le suivi des soldes.',
+    button: 'Service Jawaz',
+    path: '/jawaz',
+  },
+];
+
+export default function PageGeneral({ vehicules , total , jawaz  }) {
+  const totalVehicules = vehicules?.length ?? 0;
+
+  const stats = [
+    {
+      label: 'Total Véhicules',
+      value: totalVehicules,
+      note: 'Véhicules enregistrés dans le parc',
+      icon: CarFront,
+      color: '#078F6D',
+      light: '#E0F7EF',
+      badge: 'Parc Auto',
+      lien: '/assurance/accueil',
+    },
+    {
+      label: 'Total Actives',
+      value: total,
+      note: 'Gestion des cartes carburant',
+      icon: Fuel,
+      color: '#3478E5',
+      light: '#E6EFFF',
+      badge: 'Total',
+      lien : '/total',
+    },
+    {
+      label: 'Jawaz Actifs',
+      value: jawaz,
+      note: 'Gestion des badges autoroutiers',
+      icon: CreditCard,
+      color: '#DF8C22',
+      light: '#FFF1D8',
+      badge: 'Jawaz',
+      lien : '/jawaz',
+    },
+  ];
+
   return (
-    <div style={{minHeight: '100vh' }}>
-      <Carousel fade interval={3500} className="mb-5 shadow-sm">
-        <Carousel.Item style={{ height: '420px' }}>
-          <img
-            className="d-block w-100 h-100"
-            src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
-            alt="Bienvenue Parc Auto"
-            style={{ objectFit: 'cover', filter: 'brightness(0.55)' }}
-          />
-          <Carousel.Caption className="text-start pb-4">
-            <h2 className="fw-bold text-white display-6">
-              Bienvenue dans la Gestion du Parc Auto
-            </h2>
-            <p className="fs-5 text-light opacity-90">
-              Plateforme centralisée pour le suivi global de la flotte, la conformité
-              des assurances et badges.
-            </p>
-            <Link to="/total">
-              <Button variant="primary" size="lg" className="fw-semibold shadow-sm border-0">
-                Espace Total
-              </Button>
-            </Link>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item style={{ height: '420px' }}>
-          <img
-            className="d-block w-100 h-100"
-            src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=1200&auto=format&fit=crop"
-            alt="Gestion de Flotte"
-            style={{ objectFit: 'cover', filter: 'brightness(0.55)' }}
-          />
-          <Carousel.Caption className="text-start pb-4">
-            <h2 className="fw-bold text-white display-6">
-              Gestion Intelligente du Parc Auto
-            </h2>
-            <p className="fs-5 text-light opacity-90">
-              Suivez l'état de votre flotte, vos assurances et vos visites
-              techniques en temps réel.
-            </p>
-            <Link to="/assurance/accueil">
-              <Button
-                variant="success"
-                size="lg"
-                className="fw-semibold shadow-sm border-0"
-                style={{ backgroundColor: '#026523' }}
-              >
-                Découvrir les Véhicules
-              </Button>
-            </Link>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item style={{ height: '420px' }}>
-          <img
-            className="d-block w-100 h-100"
-            src="https://images.unsplash.com/photo-1527018601619-a508a2be00cd?q=80&w=1200&auto=format&fit=crop"
-            alt="Gestion Carburant Total"
-            style={{ objectFit: 'cover', filter: 'brightness(0.55)' }}
-          />
-          <Carousel.Caption className="text-start pb-4">
-            <h2 className="fw-bold text-white display-6">
-              Contrôle des Dépenses de Carburant
-            </h2>
-            <p className="fs-5 text-light opacity-90">
-              Optimisez la consommation et suivez les cartes Total facilement.
-            </p>
-            <Link to="/total">
-              <Button variant="primary" size="lg" className="fw-semibold shadow-sm border-0">
-                Espace Total
-              </Button>
-            </Link>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item style={{ height: '420px' }}>
-          <img
-            className="d-block w-100 h-100"
-            src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1200&auto=format&fit=crop"
-            alt="Pass Jawaz"
-            style={{ objectFit: 'cover', filter: 'brightness(0.55)' }}
-          />
-          <Carousel.Caption className="text-start pb-4">
-            <h2 className="fw-bold text-white display-6">
-              Recharge & Suivi Pass Jawaz
-            </h2>
-            <p className="fs-5 text-light opacity-90">
-              Facilitez les déplacements de vos chauffeurs sur les autoroutes.
-            </p>
-            <Link to="/jawaz">
-              <Button
-                variant="warning"
-                size="lg"
-                className="fw-semibold text-white shadow-sm border-0"
-              >
-                Service Jawaz
-              </Button>
-            </Link>
-          </Carousel.Caption>
-        </Carousel.Item>
+    <div className="dashboard-home">
+      <Carousel
+        fade
+        interval={5000}
+        className="dashboard-carousel mb-3"
+        indicators
+        controls
+      >
+        {slides.map((slide) => (
+         <Carousel.Item key={slide.title}>
+            <div className="hero-slide">
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="hero-image"
+              />
+              <div className="hero-overlay" />
+              <div className="hero-content">
+                <div className="hero-copy" style={{ maxWidth: '100%' }}>
+                  <h1>{slide.title}</h1>
+                  <div className="hero-date">
+                    <span>▦</span>
+                    {slide.date}
+                  </div>
+                  <p>{slide.description}</p>
+                  <Link to={slide.path} className="hero-button">
+                    {slide.button}
+                    <ArrowRight size={15} />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Carousel.Item>
+        ))}
       </Carousel>
-      <Container className="pb-5">
-        <div className="d-flex align-items-center gap-2 mb-2">
-            <span 
-                className="p-1 bg-success rounded-circle animate-pulse" 
-                style={{ width: '10px', height: '10px', display: 'inline-block' }}
-            ></span>
-            <span className="text-muted small fw-semibold">
-                Système de gestion actif - Synchronisé
-            </span>
-        </div>
-        <div className="mb-4">
-          <h3 className="fw-bold" style={{ color: '#1E293B', textAlign: 'left' }}>
-            Accès Rapide aux Modules
-          </h3>
-          <p className="text-muted" style={{ textAlign: 'left' }}>
-            Sélectionnez la rubrique que vous souhaitez gérer
-          </p>
-        </div>
-        <Row className="g-4 mb-5">
-          <Col md={4}>
-            <Card
-              className="h-100 border-0 rounded-4 transition-all"
-              style={{
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
-                backgroundColor: '#FFFFFF',
-              }}
-            >
-              <Card.Body className="d-flex flex-column justify-content-between p-4">
-                <div>
-                  <h5 className="fw-bold mb-2" style={{ color: '#026523' }}>
-                    Assurance & Véhicules
-                  </h5>
-                  <p className="text-muted small mb-3">
-                    Suivi des vignettes, contrôles techniques et assurances.
-                  </p>
-                </div>
-                <Link to="/assurance/accueil">
-                  <Button
-                    variant="outline-success"
-                    className="w-100 fw-semibold rounded-3 py-2"
-                    style={{ borderColor: '#026523', color: '#026523' }}
-                  >
-                    Accéder
-                  </Button>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card
-              className="h-100 border-0 rounded-4 transition-all"
-              style={{
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
-                backgroundColor: '#FFFFFF',
-              }}
-            >
-              <Card.Body className="d-flex flex-column justify-content-between p-4">
-                <div>
-                  <h5 className="fw-bold text-primary mb-2">Total Carburant</h5>
-                  <p className="text-muted small mb-3">
-                    Gestion des recharges et des cartes carburant.
-                  </p>
-                </div>
-                <Link to="/total">
-                  <Button variant="outline-primary" className="w-100 fw-semibold rounded-3 py-2">
-                    Accéder
-                  </Button>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card
-              className="h-100 border-0 rounded-4 transition-all"
-              style={{
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
-                backgroundColor: '#FFFFFF',
-              }}
-            >
-              <Card.Body className="d-flex flex-column justify-content-between p-4">
-                <div>
-                  <h5 className="fw-bold text-warning text-dark mb-2">
-                    Jawaz Autoroutes
-                  </h5>
-                  <p className="text-muted small mb-3">
-                    Recharge et gestion des badges Autoroute.
-                  </p>
-                </div>
-                <Link to="/jawaz">
-                  <Button
-                    variant="outline-warning"
-                    className="w-100 fw-semibold rounded-3 py-2"
-                  >
-                    Accéder
-                  </Button>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
+
+      <Container fluid className="px-0 pb-4">
+        <Row className="g-3 mb-4">
+          {stats.map((stat) => {
+            const Icon = stat.icon;
+
+            return (
+              <Col xs={12} md={4} key={stat.label}>
+                <Card className="stat-card h-100">
+                  <Card.Body>
+
+                    <div className="stat-main">
+                      <div
+                        className="stat-icon"
+                        style={{ background: stat.light, color: stat.color }}
+                      >
+                        <Icon size={25} strokeWidth={2.5} />
+                      </div>
+
+                      <div className="stat-details">
+                        <div className="stat-label">{stat.label}</div>
+                        <div className="stat-value">{stat.value}</div>
+                      </div>
+                    </div>
+
+                    <div className="stat-footer">
+                      <span>{stat.note}</span>
+                      <span className="stat-arrow">
+                        <Link to={stat.lien} className="px-4 py-2 text-secondary text-decoration-none d-flex align-items-center">
+                          <ArrowRight size={14} />
+                        </Link>
+                      </span>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
         </Row>
-        <Row className="g-4">
-          <Col xs={6} md={3}>
-            <Card
-              className="border-0 rounded-4 text-center p-3 h-100"
-              style={{
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
-                backgroundColor: '#FFFFFF',
-              }}
-            >
-              <div
-                className="d-inline-flex justify-content-center align-items-center mx-auto mb-2 rounded-circle"
-                style={{
-                  width: '60px',
-                  height: '60px',
-                  backgroundColor: '#E6F0EB',
-                }}
-              >
-                <Car size={28} style={{ color: '#026523' }} />
-              </div>
-              <div
-                className="fw-bold display-6 mb-0 hover-flip "
-                style={{ color: '#026523', letterSpacing: '-1px' }}
-              >
-                {vehicules ? vehicules.length : 0}
-              </div>
-              <div className="text-muted fw-medium mt-1 small">Total Flotte</div>
-            </Card>
-          </Col>
-          <Col xs={6} md={3}>
-            <Card
-              className="border-0 rounded-4 text-center p-3 h-100"
-              style={{
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
-                backgroundColor: '#FFFFFF',
-              }}
-            >
-              <div
-                className="d-inline-flex justify-content-center align-items-center mx-auto mb-2 rounded-circle"
-                style={{
-                  width: '60px',
-                  height: '60px',
-                  backgroundColor: '#E6F0EB',
-                }}
-              >
-                <ShieldCheck size={28} style={{ color: '#026523' }} />
-              </div>
-              <div
-                className="fw-bold display-6 mb-0 hover-flip "
-                style={{ color: '#026523', letterSpacing: '-1px' }}
-              >
-                43
-              </div>
-              <div className="text-muted fw-medium mt-1 small">
-                Assurances Valides
-              </div>
-            </Card>
-          </Col>
-          <Col xs={6} md={3}>
-            <Card
-              className="border-0 rounded-4 text-center p-3 h-100"
-              style={{
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
-                backgroundColor: '#FFFFFF',
-              }}
-            >
-              <div
-                className="d-inline-flex justify-content-center align-items-center mx-auto mb-2 rounded-circle"
-                style={{
-                  width: '60px',
-                  height: '60px',
-                  backgroundColor: '#E6F0EB',
-                }}
-              >
-                <Fuel size={28} style={{ color: '#026523' }} />
-              </div>
-              <div
-                className="fw-bold display-6 mb-0 hover-flip "
-                style={{ color: '#026523', letterSpacing: '-1px' }}
-              >
-                42
-              </div>
-              <div className="text-muted fw-medium mt-1 small">
-                Cartes Total Actives
-              </div>
-            </Card>
-          </Col>
-          <Col xs={6} md={3}>
-            <Card
-              className="border-0 rounded-4 text-center p-3 h-100"
-              style={{
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
-                backgroundColor: '#FFFFFF',
-              }}
-            >
-              <div
-                className="d-inline-flex justify-content-center align-items-center mx-auto mb-2 rounded-circle"
-                style={{
-                  width: '60px',
-                  height: '60px',
-                  backgroundColor: '#E6F0EB',
-                }}
-              >
-                <CreditCard size={28} style={{ color: '#026523' }} />
-              </div>
-              <div
-                className="fw-bold display-6 mb-0 hover-flip "
-                style={{ color: '#026523', letterSpacing: '-1px' }}
-              >
-                32
-              </div>
-              <div className="text-muted fw-medium mt-1 small">
-                Badges Jawaz Actifs
-              </div>
-            </Card>
-          </Col>
+        <div className="modules-heading">
+          <div>
+            <h2>Accès aux modules</h2>
+            <p>Sélectionnez un module pour accéder à ses fonctionnalités.</p>
+          </div>
+
+          <span className="overview-badge">
+            <ChartNoAxesColumn size={14} />
+            Vue générale
+          </span>
+        </div>
+
+        <Row className="g-3">
+          {modules.map((module, index) => {
+            const Icon = module.icon;
+            const SecondaryIcon = module.secondaryIcon;
+
+            return (
+              <Col xs={12} md={4} key={module.title}>
+                <Card
+                  className="module-card h-100"
+                  style={{ '--module-color': module.color }}
+                >
+                  <Card.Body>
+                    <img src={module.image} alt={module.title} className="module-bg-image" />
+                    <div className="module-top">
+                      <div
+                        className="module-icon"
+                        style={{ background: module.color }}
+                      >
+                        <Icon size={27} color="#fff" strokeWidth={2.4} />
+                      </div>
+
+                      <div
+                        className="module-secondary-icon"
+                        style={{ background: module.light, color: module.color }}
+                      >
+                        <SecondaryIcon size={20} />
+                      </div>
+
+                      <span
+                        className="module-number"
+                        style={{ background: module.light, color: module.color }}
+                      >
+                        0{index + 1}
+                      </span>
+                    </div>
+
+                    <div className="module-description">
+                      <h3 className='module-title'>{module.title}</h3>
+                      <div className="module-subtitle">{module.subtitle}</div>
+                      <p className="module-description">{module.description}</p>
+                    </div>
+
+                    <div className="module-tags">
+                      {module.tags.map((tag) => {
+                        const TagIcon = tag.icon;
+
+                        return (
+                          <span
+                            className="module-tag"
+                            key={tag.label}
+                            style={{
+                              background: module.light,
+                              color: module.color,
+                            }}
+                          >
+                            <TagIcon size={13} />
+                            {tag.label}
+                          </span>
+                        );
+                      })}
+                    </div>
+
+                    <Link to={module.path} className="module-action">
+                      Accéder au module
+                      <ArrowRight size={16} />
+                    </Link>
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
         </Row>
+
+        {/* <footer className="dashboard-footer">
+          <span>© 2025 Parc Auto Enterprise. Tous droits réservés.</span>
+          <span className="footer-status">
+            <span />
+            Parc Auto Enterprise v1.0.0
+          </span>
+        </footer> */}
       </Container>
     </div>
-  )
+  );
 }

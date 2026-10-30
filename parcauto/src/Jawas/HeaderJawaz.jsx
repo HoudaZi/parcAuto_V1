@@ -6,7 +6,6 @@ import jawazLogo from "../assets/logojawaz.png";
 
 export default function HeaderJawaz({ transactions = [] }) {
   
-  // دالة تصدير البيانات المعروضة حالياً إلى Excel
   const handleExportExcel = () => {
     if (!transactions || transactions.length === 0) {
       alert("Aucune donnée à exporter !");
